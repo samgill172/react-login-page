@@ -34,7 +34,7 @@ app.get('/api/health', async (_req, res, next) => {
 app.use('/api/auth', authRouter)
 
 // Serve index.html for all non-API routes (SPA fallback)
-app.get('*', (_req, res) => {
+app.get('/*', (_req, res) => {
   res.sendFile(path.join(__dirname, '../../../dist/index.html'))
 })
 
