@@ -20,7 +20,7 @@ app.use(
 app.use(express.json())
 
 // Serve static files from the frontend build
-app.use(express.static(path.join(__dirname, '../../../dist')))
+app.use(express.static(path.join(__dirname, '../../../../dist')))
 
 app.get('/api/health', async (_req, res, next) => {
   try {
@@ -36,7 +36,7 @@ app.use('/api/auth', authRouter)
 // Serve index.html for all non-API routes (SPA fallback)
 app.use((req, res, next) => {
   if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(__dirname, '../../../dist/index.html'))
+    res.sendFile(path.join(__dirname, '../../../../dist/index.html'))
   } else {
     next()
   }
