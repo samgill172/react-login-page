@@ -1,8 +1,14 @@
 import cors from 'cors'
 import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import { authRouter } from './routes/auth.js'
 import { pool } from './db.js'
 import { serverEnv } from './config.js'
+
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export const app = express()
 
@@ -12,6 +18,9 @@ app.use(
   }),
 )
 app.use(express.json())
+
+// Serve static files from the frontend build
+app.use(express.static(path.join(__dirname, '../../../dist')))
 
 app.get('/api/health', async (_req, res, next) => {
   try {
@@ -23,6 +32,11 @@ app.get('/api/health', async (_req, res, next) => {
 })
 
 app.use('/api/auth', authRouter)
+
+// Serve index.html for all non-API routes (SPA fallback)
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../../../dist/index.html'))
+})
 
 app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   void _next

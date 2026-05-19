@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "start": "tsx server/src/apply-schema.ts && node server/dist/server/src/index.js",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && tsc -p tsconfig.server.json",
     "db:check": "tsx server/src/check-db.ts",
     "db:migrate": "tsx server/src/apply-schema.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.server.json",
